@@ -3,10 +3,9 @@ from urllib.parse import quote_plus
 from urllib.error import URLError, HTTPError
 from bs4 import BeautifulSoup
 import argparse
-import sys
 import os
-import json
-import re
+import time
+import random
 
 
 def search_image(word, header, start_number):
@@ -64,7 +63,8 @@ while item_number <= max_images:
     mimes = []
     for url in urls:
         req = Request(url, headers=header)
-        element = urlopen(req, timeout=3)
+
+        element = urlopen(req, timeout=5)
         imgs.append(element.read())
         mimes.append(element.getheader('Content-Type'))
 
@@ -77,3 +77,5 @@ while item_number <= max_images:
                 f.write(img)
 
     item_number += 20
+
+    time.sleep(random.randrange(5, 10))
